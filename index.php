@@ -1,6 +1,6 @@
 <?php
 
-    echo "hola mundo";
+
 
 ?>
 
@@ -10,8 +10,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sitio Web</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-    Sitio Web
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <ul class="nav navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Nav 1 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Nav 2</a>
+            </li>
+        </ul>
+    </nav>
 </body>
 </html>
