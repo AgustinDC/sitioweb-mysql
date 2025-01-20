@@ -20,7 +20,7 @@
 
                 <div class="form-group">
                     <label for="txtNombre">Imagen: </label>
-                    <input type="file" class="form-control" name="txtNombre" id="txtNombre" placeholder="ID">
+                    <input type="file" class="form-control" name="txtImagen" id="txtNombre" placeholder="ID">
                 </div>
 
                 <div class="btn-group mt-3" role="group" aria-label="">
