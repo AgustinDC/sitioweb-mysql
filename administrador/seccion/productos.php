@@ -1,48 +1,31 @@
-<?php include("../template/cabecera.php"); ?>
+<?php
+include("../template/cabecera.php");
+include("../config/db.php");
+?>
 
-<?php 
+<?php
+$txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : '';
+$txtNombre = (isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : '';
+$txtImagen = (isset($_FILES['txtImagen']['name'])) ? $_FILES['txtImagen']['name'] : '';
+$accion = (isset($_POST['accion'])) ? $_POST['accion'] : '';
 
-    $txtID=(isset($_POST['txtID'])) ? $_POST['txtID'] : '';
-    $txtNombre=(isset($_POST['txtNombre'])) ? $_POST['txtNombre'] : '';
-    $txtImagen=(isset($_FILES['txtImagen']['name'])) ? $_FILES['txtImagen']['name'] : '';
-    $accion=(isset($_POST['accion'])) ? $_POST['accion'] : '';
-
-
-    echo $txtID . '<br/>';
-    echo $txtNombre . '<br/>';
-    echo $txtImagen . '<br/>';
-    echo $accion . '<br/>';
-
-    $host="localhost";
-    $db="sitioweb";
-    $user="root";
-    $pass="";
-
-    try {
-        $connectionDb = new pdo("mysql:host=$host; dbname=$db" ,$user,$pass);
-        if($connectionDb){
-            echo 'Conectado a la BD';
-        }
-    } catch (Exception $ex ) {
-        echo $ex -> getMessage();
-    }
-
-
-    switch($accion){
-        case "agregar":
-            //INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'libro de php', 'imagen.jpg');
-            echo 'Se presiono agregar';
+switch ($accion) {
+    case "agregar":
+        $sentenciaSQL = $connectionDb->prepare("INSERT INTO libros (nombre, imagen) VALUES (:nombre, :imagen);");
+        $sentenciaSQL->bindParam(':nombre', $txtNombre);
+        $sentenciaSQL->bindParam(':imagen', $txtImagen);
+        $sentenciaSQL->execute();
+        echo 'Se presiono agregar';
         break;
 
-        case "modificar":
-            echo 'Se presiono modificar';
+    case "modificar":
+        echo 'Se presiono modificar';
         break;
 
-        case "cancelar":
-            echo 'Se presiono cancelar';
+    case "cancelar":
+        echo 'Se presiono cancelar';
         break;
-    }
-
+}
 ?>
 
 <div class="col-md-5">
