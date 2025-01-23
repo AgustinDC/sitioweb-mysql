@@ -25,7 +25,23 @@ switch ($accion) {
     case "cancelar":
         echo 'Se presiono cancelar';
         break;
+
+    case "Seleccionar":
+        echo 'Se presiono Seleccionar';
+        break;
+
+    case "Borrar":
+        $sentenciaSQL = $connectionDb->prepare("DELETE FROM libros WHERE id=:id");
+        $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->execute();
+        //echo 'Se presiono Borrar';
+        break;
 }
+
+$sentenciaSQL = $connectionDb->prepare("SELECT * FROM libros");
+$sentenciaSQL->execute();
+$listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <div class="col-md-5">
@@ -73,12 +89,21 @@ switch ($accion) {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>2</td>
-                <td>Aprende php</td>
-                <td>imagen.jpg</td>
-                <td>agregar | Borrar</td>
-            </tr>
+            <?php foreach ($listaLibros as $libros) { ?>
+                <tr>
+                    <td><?php echo $libros['id']; ?></td>
+                    <td><?php echo $libros['nombre']; ?></td>
+                    <td><?php echo $libros['imagen']; ?></td>
+                    <td>
+                        agregar | Borrar
+                        <form method="post">
+                            <input type="hidden" name="txtID" id="txtID" value="<?php echo $libros['id']; ?>">
+                            <input type="submit" name="accion" value="Seleccionar" class="btn btn-primary">
+                            <input type="submit" name="accion" value="Borrar" class="btn btn-danger">
+                        </form>
+                    </td>
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
 
