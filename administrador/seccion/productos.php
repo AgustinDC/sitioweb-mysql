@@ -28,6 +28,14 @@ switch ($accion) {
 
     case "Seleccionar":
         echo 'Se presiono Seleccionar';
+
+        $sentenciaSQL = $connectionDb->prepare("SELECT * FROM libros WHERE id=:id");
+        $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->execute();
+        $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
+        $txtNombre = $libro['nombre'];
+        $txtImagen = $libro['imagen'];
+
         break;
 
     case "Borrar":
@@ -95,7 +103,6 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $libros['nombre']; ?></td>
                     <td><?php echo $libros['imagen']; ?></td>
                     <td>
-                        agregar | Borrar
                         <form method="post">
                             <input type="hidden" name="txtID" id="txtID" value="<?php echo $libros['id']; ?>">
                             <input type="submit" name="accion" value="Seleccionar" class="btn btn-primary">
