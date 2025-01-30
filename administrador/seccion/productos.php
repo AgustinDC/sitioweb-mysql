@@ -15,19 +15,23 @@ switch ($accion) {
         $sentenciaSQL->bindParam(':nombre', $txtNombre);
         $sentenciaSQL->bindParam(':imagen', $txtImagen);
         $sentenciaSQL->execute();
-        echo 'Se presiono agregar';
+        //echo 'Se presiono agregar';
         break;
 
     case "modificar":
-        echo 'Se presiono modificar';
+        $sentenciaSQL = $connectionDb->prepare("UPDATE libros SET nombre=:nombre WHERE id=:id;");
+        $sentenciaSQL->bindParam(':nombre', $txtNombre);
+        $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->execute();
+        //echo 'Se presiono modificar';
         break;
 
     case "cancelar":
-        echo 'Se presiono cancelar';
+        //echo 'Se presiono cancelar';
         break;
 
     case "Seleccionar":
-        echo 'Se presiono Seleccionar';
+        //echo 'Se presiono Seleccionar';
 
         $sentenciaSQL = $connectionDb->prepare("SELECT * FROM libros WHERE id=:id");
         $sentenciaSQL->bindParam(':id', $txtID);
@@ -62,16 +66,17 @@ $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="txtID">ID: </label>
-                    <input type="text" class="form-control" name="txtID" id="txtID" placeholder="ID">
+                    <input type="text" class="form-control" value="<?php echo $txtID ?>" name="txtID" id="txtID" placeholder="ID">
                 </div>
 
                 <div class="form-group">
                     <label for="txtNombre">Nombre: </label>
-                    <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombre">
+                    <input type="text" class="form-control" value="<?php echo $txtNombre ?>" name="txtNombre" id="txtNombre" placeholder="Nombre">
                 </div>
 
                 <div class="form-group">
                     <label for="txtImagen">Imagen: </label>
+                    <?php echo $txtImagen ?>
                     <input type="file" class="form-control" name="txtImagen" id="txtImagen" placeholder="Imagen">
                 </div>
 
